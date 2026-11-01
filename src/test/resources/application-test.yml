@@ -1,0 +1,8 @@
+# Yalnız "test" profili aktiv olduqda yüklənir. Bu, application.yml faylını əvəz edir.
+spring:
+  datasource:
+    # hər test icrası üçün yenidən yaradılır, diska heç nə yazılmır
+    url: "jdbc:sqlite::memory:"
+    hikari:
+      maximum-pool-size: 1
+      max-lifetime: 0
