@@ -152,7 +152,7 @@ Bütün xətalar eyni formadadır:
 
 ## Tapşırığa sərf olunan vaxt
 
-**[BURANI ÖZÜN DOLDUR: məsələn, "təxminən 6 saat"]**
+**Təxminən 7-8 saat (layihənin qurulması və kod, testlər, README daxil olmaqla)**
 
 ## Daha çox vaxtım olsaydı
 
