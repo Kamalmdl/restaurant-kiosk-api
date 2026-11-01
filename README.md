@@ -4,14 +4,15 @@ Restoran kiosklarından sifariş qəbul edən və mətbəxin sifarişləri idar�
 
 ## Texnologiyalar
 
-- Java 24, Spring Boot 4.1.2, Maven (Maven Wrapper daxildir)
+- Java 17, Spring Boot 3.3.5, Maven (Maven Wrapper daxildir)
 - Spring Data JPA (Hibernate) + SQLite
 - Bean Validation
+- springdoc-openapi 2.6.0 (Swagger UI)
 - JUnit 5 + MockMvc (testlər)
 
 ## Layihəni necə işə salmaq
 
-Tələb: **JDK 24 və ya daha yeni** (`java -version` ilə yoxla). Maven-i ayrıca quraşdırmaq lazım deyil.
+Tələb: **JDK 17 və ya daha yeni** (`java -version` ilə yoxla). Maven-i ayrıca quraşdırmaq lazım deyil.
 
 **Mac / Linux:**
 ```bash
@@ -33,12 +34,23 @@ Server `http://localhost:8080` ünvanında açılır. İlk işə düşəndə lay
 
 Datanı sıfırlamaq üçün tətbiqi dayandırıb `kiosk.db` faylını silin.
 
-**Testləri işə salmaq** (26 test, yaddaş bazasında işləyir, `kiosk.db`-yə toxunmur):
+**Testləri işə salmaq** (27 test, yaddaş bazasında işləyir, `kiosk.db`-yə toxunmur):
 ```bash
 ./mvnw test        # Windows: mvnw.cmd test
 ```
 
 ## API
+
+### İnteraktiv sənəd (Swagger UI)
+
+Tətbiq işləyəndə API-ni brauzerdən sınamaq olar:
+
+- Swagger UI: http://localhost:8080/swagger-ui.html
+- OpenAPI sənədi (JSON): http://localhost:8080/v3/api-docs
+
+Sənəd koddan avtomatik yaranır (springdoc-openapi), ona görə həmişə real API ilə üst-üstə düşür. OpenAPI linkini Postman-da **Import → Link** ilə əlavə edərək bütün endpoint-ləri kolleksiya kimi almaq olar.
+
+### Endpoint-lər
 
 | # | Əməliyyat | Endpoint | Uğurlu cavab |
 |---|---|---|---|
@@ -130,6 +142,8 @@ Bütün xətalar eyni formadadır:
 - **Mərkəzləşdirilmiş xəta idarəetməsi (`@RestControllerAdvice`):** Bütün endpoint-lər eyni formatda xəta qaytarır.
 - **Top 5 bazada hesablanır (`GROUP BY` + `SUM`):** Bütün sifarişləri yaddaşa yükləmək olmaz.
 - **N+1 problemi:** Siyahıda sifariş sətirləri `default_batch_fetch_size` ilə qruplarla yüklənir. Kolleksiya ilə `JOIN FETCH` pagination-u pozur (Hibernate nəticəni yaddaşda kəsir), ona görə batch fetch seçildi.
+- **OpenAPI sənədi koddan yaranır (springdoc-openapi):** Ayrıca sənəd faylı saxlanmır, ona görə sənəd və kod bir-birindən ayrılmır. Xəta cavabları `ApiError` sxemi ilə sənədləşdirilib, `/v3/api-docs`-da 6 əməliyyatın olduğunu yoxlayan test var.
+- **Versiyaların uyğunluğu:** Spring Boot 3.3.5 və springdoc 2.6.0 birlikdə seçilib. Springdoc 2.x yalnız Boot 3.x ilə işləyir, Boot 4 üçün ayrıca versiya lazımdır.
 - **Testlər:** Status qaydaları üçün sürətli unit test, qalanı üçün MockMvc inteqrasiya testləri. Yaddaş bazasında işləyir, hər test öz restoranını yaradır, buna görə testlər bir-birindən asılı deyil.
 
 ## Tələblərdəki açıq məqamlar üçün qərarlarım
@@ -152,14 +166,13 @@ Bütün xətalar eyni formadadır:
 
 ## Tapşırığa sərf olunan vaxt
 
-**Təxminən 7-8 saat (layihənin qurulması və kod, testlər, README daxil olmaqla)**
+**Təxminən 7-8 saat (layihənin qurulması, testlərin yazılması daxil olmaqla)**
 
 ## Daha çox vaxtım olsaydı
 
 - Optimistic locking (`@Version`) əlavə edərdim.
 - `ddl-auto: update` əvəzinə Flyway ilə miqrasiyalar yazardım.
 - PostgreSQL + Testcontainers ilə testlər, Docker Compose ilə işə salma.
-- OpenAPI/Swagger sənədləşdirməsi.
 - Sifariş yaradanda təkrar göndərilmənin qarşısını almaq üçün idempotency key.
 - Top 5 üçün DTO əvəzinə repository-də ayrıca projection interfeysi.
 - Restoran və məhsul siyahısı endpoint-ləri (kiosk menyusu üçün) və tarix aralığı ilə top 5.
