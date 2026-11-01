@@ -164,7 +164,3 @@ Bütün xətalar eyni formadadır:
 - Top 5 üçün DTO əvəzinə repository-də ayrıca projection interfeysi.
 - Restoran və məhsul siyahısı endpoint-ləri (kiosk menyusu üçün) və tarix aralığı ilə top 5.
 - Autentifikasiya (kiosk və mətbəx üçün ayrı rollar).
-
-## AI vasitələrindən istifadə
-
-Layihənin kodunu yazarkən AI köməkçisindən (Claude) istifadə etmişəm. Hər hissəni oxuyub başa düşmüşəm, testlərlə və əl ilə yoxlamışam, və layihənin bütün qərarlarını izah edə bilərəm.
