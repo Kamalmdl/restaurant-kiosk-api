@@ -4,7 +4,6 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-/** Generic page wrapper: the items of the current page plus paging metadata. */
 public record PagedResponse<T>(
         List<T> content,
         int page,

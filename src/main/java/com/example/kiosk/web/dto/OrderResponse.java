@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/** Order data returned to API clients, including its lines and the total amount. */
 public record OrderResponse(
         Long id,
         Long restaurantId,
@@ -33,7 +32,6 @@ public record OrderResponse(
         );
     }
 
-    /** One line of an order: product name, quantity, unit price and line total. */
     public record OrderLineResponse(
             Long productId,
             String productName,

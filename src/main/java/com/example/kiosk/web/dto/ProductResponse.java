@@ -4,7 +4,6 @@ import com.example.kiosk.domain.Product;
 
 import java.math.BigDecimal;
 
-/** Product data returned to API clients. Entities are never exposed directly. */
 public record ProductResponse(
         Long id,
         Long restaurantId,
